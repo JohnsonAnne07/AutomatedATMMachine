@@ -10,9 +10,13 @@ const PROMPT = require('readline-sync');
 
 let continueResponse;
 let cardNumber;
+let accounts = [];
 
 function main(){
     setContinueResponse();
+    while (continueResponse === 1) {
+        populateAccounts();
+    }
 }
 
 main();
@@ -28,11 +32,18 @@ function setContinueResponse() {
     }
 }
 
+function populateAccounts() {
+    let fileContents = IO.readFileSync('data.csv' , 'utf8');
+    let lines = fuleContents.toString().split(/\r?\n/);
+    for (let i = 0, i < accounts.length; i++){
+        accounts.push(lines[i].toString().split(/,/));
+    }
+}
 function insertCardNumber(){
     while(typeof cardNumber === 'undefined' || cardNumber !== /[0-9]{4}/) {
         cardNumber = PROMPT.question('\nPlease enter your card number: ');
     }
     for (let i = 0; i < accounts.length; i++){
-
+        
     }
 }
