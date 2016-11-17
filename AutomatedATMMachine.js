@@ -35,15 +35,20 @@ function setContinueResponse() {
 function populateAccounts() {
     let fileContents = IO.readFileSync('data.csv' , 'utf8');
     let lines = fuleContents.toString().split(/\r?\n/);
-    for (let i = 0, i < accounts.length; i++){
+    for (let i = 0; i < accounts.length; i++){
         accounts.push(lines[i].toString().split(/,/));
     }
 }
-function insertCardNumber(){
-    while(typeof cardNumber === 'undefined' || cardNumber !== /[0-9]{4}/) {
+function setCardNumber(){
+    const CARD_NUMBER = 0;
+    while(typeof cardNumber === 'undefined' || cardNumber !== /[0-9]{4}/.test(cardNumber)) {
         cardNumber = PROMPT.question('\nPlease enter your card number: ');
     }
     for (let i = 0; i < accounts.length; i++){
-        
+        if (cardNumber  === accounts[1][CARD_NUMBER]){
+            break;
+        } else {
+            return setCardNumber();
+        }
     }
 }
