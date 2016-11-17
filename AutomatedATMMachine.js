@@ -9,12 +9,14 @@
 const PROMPT = require('readline-sync');
 
 let continueResponse;
-let cardNumber;
+let cardNumber, pin;
 let accounts = [];
 
 function main(){
     setContinueResponse();
     while (continueResponse === 1) {
+        setCardNumber();
+        setPIN();
         populateAccounts();
     }
 }
@@ -41,14 +43,29 @@ function populateAccounts() {
 }
 function setCardNumber(){
     const CARD_NUMBER = 0;
-    while(typeof cardNumber === 'undefined' || cardNumber !== /[0-9]{4}/.test(cardNumber)) {
+    while (typeof cardNumber === 'undefined' || cardNumber !== /[0-9]{4}/.test(cardNumber)) {
         cardNumber = PROMPT.question('\nPlease enter your card number: ');
     }
     for (let i = 0; i < accounts.length; i++){
-        if (cardNumber  === accounts[1][CARD_NUMBER]){
+        if (cardNumber  === accounts[i][CARD_NUMBER]){
             break;
         } else {
             return setCardNumber();
         }
     }
+}
+
+function setPIN() {
+    const PIN = 1;
+    while (typeof pin === 'undefined' || pin !== /[0-9]{3}/.test(pin)){
+        pin = PROMPT.question('Please enter your personal PIN Number:')
+    }
+    for (let i = 0; i < accounts.length; i++){
+        if(pin === accounts [i][PIN]){
+            break;
+        } else {
+            return setPIN;
+        }
+    }
+    
 }
