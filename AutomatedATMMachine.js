@@ -7,17 +7,19 @@
 
 "use strict";
 const PROMPT = require('readline-sync');
+const IO = require(`fs`); 
 
 let continueResponse;
 let cardNumber, pin;
-let accounts = [];
+let accounts = []; //card number, pin, last, first, number of accounts, balance of checking, balance of savings
+
 
 function main(){
     setContinueResponse();
     while (continueResponse === 1) {
+        populateAccounts();
         setCardNumber();
         setPIN();
-        populateAccounts();
     }
 }
 
@@ -36,7 +38,7 @@ function setContinueResponse() {
 
 function populateAccounts() {
     let fileContents = IO.readFileSync('data.csv' , 'utf8');
-    let lines = fuleContents.toString().split(/\r?\n/);
+    let lines = fileContents.toString().split(/\r?\n/);
     for (let i = 0; i < accounts.length; i++){
         accounts.push(lines[i].toString().split(/,/));
     }
@@ -49,9 +51,8 @@ function setCardNumber(){
     for (let i = 0; i < accounts.length; i++){
         if (cardNumber  === accounts[i][CARD_NUMBER]){
             break;
-        } else {
-            return setCardNumber();
-        }
+        } 
+        return setCardNumber();
     }
 }
 
@@ -63,9 +64,8 @@ function setPIN() {
     for (let i = 0; i < accounts.length; i++){
         if(pin === accounts [i][PIN]){
             break;
-        } else {
-            return setPIN;
-        }
+        } 
+        return setPIN;
     }
     
 }
