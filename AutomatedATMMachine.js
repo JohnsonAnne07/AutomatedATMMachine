@@ -10,7 +10,7 @@ const PROMPT = require('readline-sync');
 const IO = require(`fs`); 
 
 let continueResponse;
-let cardNumber, pin;
+let cardNumber, pin, person;
 let accounts = []; //card number, pin, last, first, number of accounts, balance of checking, balance of savings
 
 
@@ -45,27 +45,38 @@ function populateAccounts() {
 }
 function setCardNumber(){
     const CARD_NUMBER = 0;
+    let correctCardNumber = false;
     while (typeof cardNumber === 'undefined' || !/[0-9]{4}/.test(cardNumber)) {
         cardNumber = PROMPT.question('\nPlease enter your card number: ');
     }
-    for (let i = 0; i < accounts.length; i++){
-        if (cardNumber  === accounts[i][CARD_NUMBER]){
+    for (let i = 0; i < accounts.length; i++) {
+        if (cardNumber === accounts [i][CARD_NUMBER]){
+            correctCardNumber = true;
+            person = i;
             break;
-        } 
+        }
+    }
+    if (correctCardNumber === false) {
+        console.log('WRONG!');
         return setCardNumber();
+
     }
 }
 
 function setPIN() {
     const PIN = 1;
-    while (typeof pin === 'undefined' || !/[0-9]{3}/.test(pin)){
+    let correctPin = false;
+    while (typeof pin === 'undefined' || !/^[0-9]{3}$/.test(pin)){
         pin = PROMPT.question('\nPlease enter your personal PIN Number:')
     }
     for (let i = 0; i < accounts.length; i++){
-        if(pin === accounts [i][PIN]){
+        if (pin === accounts [person][PIN]) {
+            correctPin = true;
             break;
-        } 
+        }
+    }
+    if (correctPin === false) {
+        console.log('WRONG!');
         return setPIN;
     }
-    
 }
