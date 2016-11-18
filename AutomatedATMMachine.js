@@ -45,7 +45,7 @@ function populateAccounts() {
 }
 function setCardNumber(){
     const CARD_NUMBER = 0;
-    while (typeof cardNumber === 'undefined' || cardNumber !== /[0-9]{4}/.test(cardNumber)) {
+    while (typeof cardNumber === 'undefined' || !/[0-9]{4}/.test(cardNumber)) {
         cardNumber = PROMPT.question('\nPlease enter your card number: ');
     }
     for (let i = 0; i < accounts.length; i++){
@@ -58,8 +58,8 @@ function setCardNumber(){
 
 function setPIN() {
     const PIN = 1;
-    while (typeof pin === 'undefined' || pin !== /[0-9]{3}/.test(pin)){
-        pin = PROMPT.question('Please enter your personal PIN Number:')
+    while (typeof pin === 'undefined' || !/[0-9]{3}/.test(pin)){
+        pin = PROMPT.question('\nPlease enter your personal PIN Number:')
     }
     for (let i = 0; i < accounts.length; i++){
         if(pin === accounts [i][PIN]){
