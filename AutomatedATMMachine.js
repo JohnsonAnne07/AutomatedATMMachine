@@ -12,6 +12,7 @@ const IO = require(`fs`);
 let continueResponse;
 let cardNumber, pin, person;
 let accounts = []; //card number, pin, last, first, number of accounts, balance of checking, balance of savings
+let currentUser = []; //the SD array that is created when you enter the card number
 
 
 function main(){
@@ -45,38 +46,30 @@ function populateAccounts() {
 }
 function setCardNumber(){
     const CARD_NUMBER = 0;
-    let correctCardNumber = false;
     while (typeof cardNumber === 'undefined' || !/[0-9]{4}/.test(cardNumber)) {
         cardNumber = PROMPT.question('\nPlease enter your card number: ');
     }
     for (let i = 0; i < accounts.length; i++) {
         if (cardNumber === accounts [i][CARD_NUMBER]){
-            correctCardNumber = true;
-            person = i;
             break;
+        } else {
+            console.log('WRONG!™');
+            return setCardNumber();
         }
-    }
-    if (correctCardNumber === false) {
-        console.log('WRONG!');
-        return setCardNumber();
-
     }
 }
 
 function setPIN() {
     const PIN = 1;
-    let correctPin = false;
-    while (typeof pin === 'undefined' || !/^[0-9]{3}$/.test(pin)){
-        pin = PROMPT.question('\nPlease enter your personal PIN Number:')
+    while (typeof pin === 'undefined' || !/[0-9]{3}/.test(pin)) {
+        pin = PROMPT.question('\nPlease enter your Personal PIN Number: ');
     }
-    for (let i = 0; i < accounts.length; i++){
-        if (pin === accounts [person][PIN]) {
-            correctPin = true;
+    for (let i = 0; i < accounts.length; i++) {
+        if (cardNumber === accounts [i][PIN]){
             break;
+        } else {
+            console.log('WRONG!™');
+            return setPIN();
         }
-    }
-    if (correctPin === false) {
-        console.log('WRONG!');
-        return setPIN;
     }
 }
