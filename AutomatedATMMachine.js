@@ -10,12 +10,12 @@ const PROMPT = require('readline-sync');
 const IO = require(`fs`);
 
 let continueResponse;
-let cardNumber, pin, userChoice, temp;
+let cardNumber, pin, userChoice, temp, whichAccount;
 let accounts = []; //card number, pin, last, first, number of accounts, balance of checking, balance of savings
 let currentUser = []; //the SD array that is created when you enter the card number
 
 const CARD_NUMBER = 0, PIN = 1, LAST_NAME = 2, FIRST_NAME = 3, NUMBER_OF_ACCOUNTS = 4, BALANCE_OF_CHECKING = 5, BALANCE_OF_SAVINGS = 6;
-const VIEW = 1, WITHDRAWL = 2, DEPOSIT = 3, TRANSFER = 4;
+const VIEW = 1, WITHDRAWL = 2, DEPOSIT = 3, TRANSFER = 4, CHECKING = 0, SAVINGS = 1;
 
 function main() {
     setContinueResponse();
@@ -112,5 +112,14 @@ function withdraw(){
     if (currentUser[NUMBER_OF_ACCOUNTS] === ONE_ACCOUNT){
         temp = PROMPT.question('Withdraw amount: ');
         currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp;
+    } else {
+        whichAccount = PROMPT.question('Would you like to withdraw from checkings 0) or savings 1)')
+        if (whichAccount === CHECKING){
+            temp = PROMPT.question('Withdraw amount from checking: ');
+            currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp;
+        } else {
+            temp = PROMPT.question('Withdraw amount savings: ');
+            currentUser[BALANCE_OF_SAVINGS] = currentUser[BALANCE_OF_SAVINGS] - temp;
+        }
     }
 }
