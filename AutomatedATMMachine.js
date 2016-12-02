@@ -22,7 +22,7 @@ function main() {
     while (continueResponse === 1) {
         populateAccounts();
         setCardNumber();
-        setCurrentUser();
+        currentUser = getCurrentUser();
         setPIN();
         displayUserMenu();
         setUserChoice();
@@ -54,43 +54,50 @@ function setContinueResponse() {
 function populateAccounts() {
     let fileContents = IO.readFileSync('data.csv', 'utf8');
     let lines = fileContents.toString().split(/\r?\n/);
-    for (let i = 0; i < accounts.length; i++) {
+    for (let i = 0; i < lines.length; i++) {
         accounts.push(lines[i].toString().split(/,/));
     }
 }
 function setCardNumber() {
-    console.log('top of setcardnumber');
-    let found = 0;
-    while (typeof cardNumber === 'undefined' || !/[0-9]{4}/.test(cardNumber)) {
+    let found = false;
+    while (typeof cardNumber === 'undefined' || !/[0-9]{4}/.test(cardNumber) || cardNumber === -1) {
         cardNumber = PROMPT.question('\nPlease enter your card number: ');
     }
     for (let i = 0; i < accounts.length; i++) {
-        console.log('for loop');
         if (cardNumber === accounts [i][CARD_NUMBER]) {
             console.log('if card number is real');
-            found = 1;
+            found = true;
             break;
         }
     }
-    if (found === 0) {
+    if (found === false) {
         console.log('WRONG!™');
-        //return setCardNumber();
+        cardNumber = -1;
+        return setCardNumber();
     }
 }
 
 function setPIN() {
-    let found = 0;
-    while (typeof pin === 'undefined' || !/[0-9]{3}/.test(pin)) {
+    const WRONG_PIN = -1;
+    console.log(accounts);
+    console.log(currentUser);
+    console.log(currentUser[PIN]);
+    while (typeof pin === 'undefined' || !/[0-9]{3}/.test(pin) || pin === WRONG_PIN) {
         pin = PROMPT.question('\nPlease enter your Personal PIN Number: ');
     }
     if (pin !== currentUser [PIN]) {
         console.log('WRONG!™');
+        pin = WRONG_PIN;
         return setPIN();
     }
 }
 
-function setCurrentUser() {
-    currentUser = accounts[cardNumber]; //HOW DOES THIS WORK
+function getCurrentUser() {
+    for(let i = 0; i < accounts.length; i++) {
+        if(cardNumber == accounts[i][CARD_NUMBER]) {
+            return accounts[i];
+        }
+    }
 }
 
 function displayUserMenu() {
