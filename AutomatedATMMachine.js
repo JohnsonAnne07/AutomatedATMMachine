@@ -22,7 +22,8 @@ function main() {
     while (continueResponse === 1) {
         populateAccounts();
         setCardNumber();
-        currentUser = getCurrentUser();
+        //currentUser = setCurrentUser();
+        setCurrentUser();
         setPIN();
         displayUserMenu();
         setUserChoice();
@@ -92,10 +93,11 @@ function setPIN() {
     }
 }
 
-function getCurrentUser() {
+function setCurrentUser() {
     for(let i = 0; i < accounts.length; i++) {
         if(cardNumber == accounts[i][CARD_NUMBER]) {
-            return accounts[i];
+            currentUser = accounts[i];
+            //return accounts[i];
         }
     }
 }
