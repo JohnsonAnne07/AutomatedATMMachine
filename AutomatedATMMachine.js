@@ -15,7 +15,7 @@ let accounts = []; //card number, pin, last, first, number of accounts, balance 
 let currentUser = []; //the SD array that is created when you enter the card number
 
 const CARD_NUMBER = 0, PIN = 1, LAST_NAME = 2, FIRST_NAME = 3, NUMBER_OF_ACCOUNTS = 4, BALANCE_OF_CHECKING = 5, BALANCE_OF_SAVINGS = 6;
-const VIEW = 1, WITHDRAWL = 2, DEPOSIT = 3, TRANSFER = 4, CHECKING = 0, SAVINGS = 1;
+const VIEW = 1, WITHDRAWL = 2, DEPOSIT = 3, TRANSFER = 4, CHECKING = 0, SAVINGS = 1, ONE_ACCOUNT = 1;
 
 function main() {
     setContinueResponse();
@@ -27,11 +27,11 @@ function main() {
         displayUserMenu();
         setUserChoice();
         if (userChoice === VIEW) {
-
+            displayBalance();
         } else if (userChoice === WITHDRAWL) {
-
+            setWithdraw();
         } else if (userChoice === DEPOSIT) {
-
+            setDeposit();
         } else {
 
         }
@@ -94,7 +94,6 @@ function setCurrentUser() {
 }
 
 function displayUserMenu() {
-    const ONE_ACCOUNT = 1;
     if (currentUser[NUMBER_OF_ACCOUNTS] === ONE_ACCOUNT) {
         console.log('1: View account balance\n2: Withdraw money\n3: Deposit money');
     } else {
@@ -107,8 +106,7 @@ function setUserChoice() {
         userChoice = PROMPT.question('\nPlease enter the number of your choice: ');
 }
 
-function withdraw(){
-    const ONE_ACCOUNT = 1;
+function setWithdraw(){
     if (currentUser[NUMBER_OF_ACCOUNTS] === ONE_ACCOUNT){
         temp = PROMPT.question('Withdraw amount: ');
         currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp;
@@ -120,6 +118,23 @@ function withdraw(){
         } else {
             temp = PROMPT.question('Withdraw amount savings: ');
             currentUser[BALANCE_OF_SAVINGS] = currentUser[BALANCE_OF_SAVINGS] - temp;
+        }
+    }
+}
+
+function setDeposit(){
+
+}
+
+function displayBalance(){
+    if (currentUser[NUMBER_OF_ACCOUNTS] = ONE_ACCOUNT){
+        console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account');
+    } else {
+        whichAccount = PROMPT.question('Would you like to view the balance of your checkings 0) or savings 1) account');
+        if(whichAccount = CHECKING){
+            console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account.')
+        } else {
+            console.log('You have $' + currentUser[BALANCE_OF_SAVINGS] + ' in your savings account.')
         }
     }
 }
