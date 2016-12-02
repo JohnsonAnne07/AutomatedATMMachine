@@ -22,7 +22,6 @@ function main() {
     while (continueResponse === 1) {
         populateAccounts();
         setCardNumber();
-        //currentUser = setCurrentUser();
         setCurrentUser();
         setPIN();
         displayUserMenu();
@@ -80,9 +79,6 @@ function setCardNumber() {
 
 function setPIN() {
     const WRONG_PIN = -1;
-    console.log(accounts);
-    console.log(currentUser);
-    console.log(currentUser[PIN]);
     while (typeof pin === 'undefined' || !/[0-9]{3}/.test(pin) || pin === WRONG_PIN) {
         pin = PROMPT.question('\nPlease enter your Personal PIN Number: ');
     }
@@ -104,9 +100,9 @@ function setCurrentUser() {
 
 function displayUserMenu() {
     if (currentUser[NUMBER_OF_ACCOUNTS] === ONE_ACCOUNT) {
-        console.log('1: View account balance\n2: Withdraw money\n3: Deposit money');
+        console.log('\n1: View account balance\n2: Withdraw money\n3: Deposit money');
     } else {
-        console.log('1: View account balance\n2: Withdraw money\n3: Deposit money\n4: Transfer money');
+        console.log('\n1: View account balance\n2: Withdraw money\n3: Deposit money\n4: Transfer money');
     }
 }
 
