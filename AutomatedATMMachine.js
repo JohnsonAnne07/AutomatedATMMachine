@@ -33,7 +33,7 @@ function main() {
         } else if (userChoice === DEPOSIT) {
             setDeposit();
         } else {
-
+            setTransfer();
         }
     }
 }
@@ -90,8 +90,8 @@ function setPIN() {
 }
 
 function setCurrentUser() {
-    for(let i = 0; i < accounts.length; i++) {
-        if(cardNumber == accounts[i][CARD_NUMBER]) {
+    for (let i = 0; i < accounts.length; i++) {
+        if (cardNumber == accounts[i][CARD_NUMBER]) {
             currentUser = accounts[i];
             //return accounts[i];
         }
@@ -111,13 +111,13 @@ function setUserChoice() {
         userChoice = PROMPT.question('\nPlease enter the number of your choice: ');
 }
 
-function setWithdraw(){
-    if (currentUser[NUMBER_OF_ACCOUNTS] === ONE_ACCOUNT){
+function setWithdraw() {
+    if (currentUser[NUMBER_OF_ACCOUNTS] === ONE_ACCOUNT) {
         temp = PROMPT.question('Withdraw amount: ');
         currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp;
     } else {
         whichAccount = PROMPT.question('Would you like to withdraw from checkings 0) or savings 1)')
-        if (whichAccount === CHECKING){
+        if (whichAccount === CHECKING) {
             temp = PROMPT.question('Withdraw amount from checking: ');
             currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp;
         } else {
@@ -127,19 +127,47 @@ function setWithdraw(){
     }
 }
 
-function setDeposit(){
-
+function setDeposit() {
+    if (currentUser[NUMBER_OF_ACCOUNTS] === ONE_ACCOUNT) {
+        console.log('Please insert money into machine');
+        temp = PROMPT.question('Deposit amount: ');
+        currentUser[BALANCE_OF_CHECKING] = Number(currentUser[BALANCE_OF_CHECKING] + temp);
+    } else {
+        whichAccount = PROMPT.question('Would you like to withdraw from checkings 0) or savings 1)')
+        if (whichAccount === CHECKING) {
+            console.log('Please insert money into machine');
+            temp = PROMPT.question('Deposit amount to checking: ');
+            currentUser[BALANCE_OF_CHECKING] = Number(currentUser[BALANCE_OF_CHECKING] + temp);
+        } else {
+            console.log('Please insert money into machine');
+            temp = PROMPT.question('Withdraw amount savings: ');
+            currentUser[BALANCE_OF_SAVINGS] = Number(currentUser[BALANCE_OF_SAVINGS] + temp);
+        }
+    }
 }
 
-function displayBalance(){
-    if (currentUser[NUMBER_OF_ACCOUNTS] = ONE_ACCOUNT){
+function displayBalance() {
+    if (currentUser[NUMBER_OF_ACCOUNTS] = ONE_ACCOUNT) {
         console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account');
     } else {
-        whichAccount = PROMPT.question('Would you like to view the balance of your checkings 0) or savings 1) account');
-        if(whichAccount = CHECKING){
+        whichAccount = PROMPT.question('Would you like to view the balance of your checking 0) or savings 1) account');
+        if (whichAccount = CHECKING) {
             console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account.')
         } else {
             console.log('You have $' + currentUser[BALANCE_OF_SAVINGS] + ' in your savings account.')
         }
     }
+}
+
+function setTransfer() {
+    let outputAccount, inputAccount;
+    outputAccount = PROMPT.question('Would you like to transfer money FROM your checking 0) or savings 1) account');
+    if (outputAccount = CHECKING) {
+        inputAccount = SAVINGS;
+    } else {
+        inputAccount = CHECKING;
+    }
+    temp = PROMPT.question('Enter amount to transfer: ');
+    currentUser[outputAccount] = Number(currentUser[outputAccount] - temp);
+    currentUser[inputAccount] = Number(currentUser[inputAccount] + temp);
 }
