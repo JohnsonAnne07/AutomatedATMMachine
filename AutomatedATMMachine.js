@@ -41,7 +41,7 @@ function main() {
         }
         userChoice = -1;
     }
-    writeUserData();
+    //writeUserData();
 }
 
 main();
@@ -104,7 +104,7 @@ function setCurrentUser() {
 }
 
 function displayUserMenu() {
-    if (currentUser[NUMBER_OF_ACCOUNTS] === ONE_ACCOUNT) {
+    if (currentUser[NUMBER_OF_ACCOUNTS] == ONE_ACCOUNT) {
         console.log('\n1: View account balance\n2: Withdraw money\n3: Deposit money');
     } else {
         console.log('\n1: View account balance\n2: Withdraw money\n3: Deposit money\n4: Transfer money');
@@ -112,15 +112,36 @@ function displayUserMenu() {
 }
 
 function setUserChoice() {
-    while (typeof userChoice === 'undefined' || !/[0-4]{1}/.test(userChoice) || userChoice === -1){
-        userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
-        console.log(userChoice);
-        return userChoice;
+    const LOWEST = 1, HIGHEST = 4;
+    if(currentUser[NUMBER_OF_ACCOUNTS] == ONE_ACCOUNT){
+        if (typeof userChoice !== 'undefined'){
+            userChoice = -1;
+            while (userChoice < LOWEST || userChoice > HIGHEST || userChoice == TRANSFER || isNaN(userChoice) || userChoice === -1){
+                userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
+            }
+        } else {
+            while (userChoice < LOWEST || userChoice > HIGHEST || userChoice == TRANSFER || isNaN(userChoice)){
+                userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
+            }
+        }
+    } else {
+        console.log('two accounts');
+        if (typeof userChoice !== 'undefined'){
+            userChoice = -1;
+            while (userChoice < LOWEST || userChoice > HIGHEST || isNaN(userChoice) || userChoice === -1){
+                userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
+            }
+        } else {
+            while (userChoice < LOWEST || userChoice > HIGHEST ||isNaN(userChoice)){
+                userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
+            }
+        }
     }
+    return userChoice;
 }
 
 function displayBalance() {
-    if (currentUser[NUMBER_OF_ACCOUNTS] = ONE_ACCOUNT) {
+    if (currentUser[NUMBER_OF_ACCOUNTS] == ONE_ACCOUNT) {
         console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account');
     } else {
         whichAccount = PROMPT.question('Would you like to view the balance of your checking 0) or savings 1) account');
