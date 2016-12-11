@@ -125,7 +125,6 @@ function setUserChoice() {
             }
         }
     } else {
-        console.log('two accounts');
         if (typeof userChoice !== 'undefined'){
             userChoice = -1;
             while (userChoice < LOWEST || userChoice > HIGHEST || isNaN(userChoice) || userChoice === -1){
@@ -165,16 +164,55 @@ function displayBalance() {
 }
 
 function setWithdraw() {
-    if (currentUser[NUMBER_OF_ACCOUNTS] === ONE_ACCOUNT) {
-        temp = PROMPT.question('Withdraw amount: ');
+    const MIN_WITHDRAWAL = 0;
+    if (currentUser[NUMBER_OF_ACCOUNTS] == ONE_ACCOUNT) {
+        if (typeof temp !== 'undefined'){
+            temp = -1;
+            while (temp < MIN_WITHDRAWAL || temp > currentUser[BALANCE_OF_CHECKING] || isNaN(temp) || temp == -1){
+                temp = PROMPT.question('Withdraw amount: ');
+            }
+        } else {
+            while (temp < MIN_WITHDRAWAL || temp > currentUser[BALANCE_OF_CHECKING] || isNaN(temp)){
+                temp = PROMPT.question('Withdraw amount: ');
+            }
+        }
         currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp;
     } else {
-        whichAccount = PROMPT.question('Would you like to withdraw from checkings 0) or savings 1)');
-        if (whichAccount === CHECKING) {
-            temp = PROMPT.question('Withdraw amount from checking: ');
-            currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp;
+        if (typeof whichAccount !== 'undefined') {
+            whichAccount = -1;
+            while(whichAccount == -1 || whichAccount != CHECKING && whichAccount != SAVINGS || isNaN(whichAccount)) {
+                whichAccount = PROMPT.question('Would you like to withdraw from checkings 0) or savings 1) account: ');
+            }
         } else {
-            temp = PROMPT.question('Withdraw amount savings: ');
+            while(isNaN(whichAccount) || whichAccount != CHECKING && whichAccount != SAVINGS) {
+                whichAccount = PROMPT.question('Would you like to withdraw from checkings 0) or savings 1) account: ');
+            }
+        }
+        if (whichAccount === CHECKING) {
+            console.log('checking');
+            if (typeof temp !== 'undefined'){
+                temp = -1;
+                while (temp < MIN_WITHDRAWAL || temp > currentUser[BALANCE_OF_CHECKING] || isNaN(temp) || temp == -1){
+                    temp = PROMPT.question('Withdraw amount from checking: ');
+                }
+            } else {
+                while (temp < MIN_WITHDRAWAL || temp > currentUser[BALANCE_OF_CHECKING] || isNaN(temp)){
+                    temp = PROMPT.question('Withdraw amount from checking: ');
+                }
+            }
+            currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp;
+            console.log(currentUser[BALANCE_OF_CHECKING]);
+        } else {
+            if (typeof temp !== 'undefined'){
+                temp = -1;
+                while (temp < MIN_WITHDRAWAL || temp > currentUser[BALANCE_OF_SAVINGS] || isNaN(temp) || temp == -1){
+                    temp = PROMPT.question('Withdraw amount savings: ');
+                }
+            } else {
+                while (temp < MIN_WITHDRAWAL || temp > currentUser[BALANCE_OF_SAVINGS] || isNaN(temp)){
+                    temp = PROMPT.question('Withdraw amount savings: ');
+                }
+            }
             currentUser[BALANCE_OF_SAVINGS] = currentUser[BALANCE_OF_SAVINGS] - temp;
         }
     }
