@@ -9,7 +9,7 @@
 const PROMPT = require('readline-sync');
 const IO = require(`fs`);
 
-let continueResponse;
+let continueResponse = undefined;
 let cardNumber, pin, userChoice, temp, whichAccount;
 let accounts = []; //card number, pin, last, first, number of accounts, balance of checking, balance of savings
 let currentUser = []; //the SD array that is created when you enter the card number
@@ -26,33 +26,34 @@ function main() {
         setPIN();
         displayUserMenu();
         setUserChoice();
-        if (userChoice == VIEW) {
+        if (userChoice === VIEW) {
             displayBalance();
-        } else if (userChoice == WITHDRAWAL) {
+            setContinueResponse();
+        } else if (userChoice === WITHDRAWAL) {
             setWithdraw();
-        } else if (userChoice == DEPOSIT) {
+            setContinueResponse();
+        } else if (userChoice === DEPOSIT) {
             setDeposit();
-        } else if (userChoice == TRANSFER) {
-            setTransfer();
+            setContinueResponse();
         } else {
-            console.log("wtf");
+            setTransfer();
+            setContinueResponse();
         }
-        setContinueResponse();
+        userChoice = -1;
     }
+    writeUserData();
 }
 
 main();
 
 function setContinueResponse() {
-    if (continueResponse) {
+    if (typeof continueResponse !== 'undefined') {
         continueResponse = -1;
         while (continueResponse !== 0 && continueResponse !== 1) {
             continueResponse = Number(PROMPT.question(`\nDo you want to continue? [0=no, 1=yes]: `));
-            console.log("continue response: " + continueResponse + ".");
         }
     } else {
         continueResponse = 1;
-        console.log("continue response: " + continueResponse + ".");
     }
 }
 
@@ -64,19 +65,19 @@ function populateAccounts() {
     }
 }
 function setCardNumber() {
+    const WRONG_CARDNUMBER = -1;
     let found = false;
-    while (typeof cardNumber === 'undefined' || !/[0-9]{4}/.test(cardNumber) || cardNumber === -1) {
+    while (typeof cardNumber === 'undefined' || !/[0-9]{4}/.test(cardNumber) || cardNumber === WRONG_CARDNUMBER) {
         cardNumber = PROMPT.question('\nPlease enter your card number: ');
     }
     for (let i = 0; i < accounts.length; i++) {
         if (cardNumber === accounts [i][CARD_NUMBER]) {
-            console.log('if card number is real');
             found = true;
             break;
         }
     }
     if (found === false) {
-        console.log('WRONG!™');
+        console.log('WRONG!™ ');
         cardNumber = -1;
         return setCardNumber();
     }
@@ -88,7 +89,7 @@ function setPIN() {
         pin = PROMPT.question('\nPlease enter your Personal PIN Number: ');
     }
     if (pin !== currentUser [PIN]) {
-        console.log('WRONG!™');
+        console.log('WRONG!™ ');
         pin = WRONG_PIN;
         return setPIN();
     }
@@ -98,7 +99,6 @@ function setCurrentUser() {
     for (let i = 0; i < accounts.length; i++) {
         if (cardNumber == accounts[i][CARD_NUMBER]) {
             currentUser = accounts[i];
-            //return accounts[i];
         }
     }
 }
@@ -112,15 +112,14 @@ function displayUserMenu() {
 }
 
 function setUserChoice() {
-    while (typeof userChoice === 'undefined' || !/[0-4]{1}/.test(userChoice)){
-        userChoice = PROMPT.question('\nPlease enter the number of your choice: ');
+    while (typeof userChoice === 'undefined' || !/[0-4]{1}/.test(userChoice) || userChoice === -1){
+        userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
         console.log(userChoice);
         return userChoice;
     }
 }
 
 function displayBalance() {
-    console.log("display balance");
     if (currentUser[NUMBER_OF_ACCOUNTS] = ONE_ACCOUNT) {
         console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account');
     } else {
@@ -179,4 +178,20 @@ function setTransfer() {
     temp = PROMPT.question('Enter amount to transfer: ');
     currentUser[outputAccount] = Number(currentUser[outputAccount] - temp);
     currentUser[inputAccount] = Number(currentUser[inputAccount] + temp);
+}
+
+function writeUserData() {
+    let userData = "";
+    for (let i = 0; i < currentUser.length; i++) {
+        if (i < currentUser.length -1) {
+            userData += currentUser[i] + ",";
+        } else {
+            userData += currentUser[i];
+        }
+    }
+
+    console.log(userData);
+    let data = IO.readFileSync('data.csv', 'utf8');
+    let result = data.replace(new RegExp('^' + userData.slice(0, 4) + '.*'), userData);
+    IO.writeFileSync('data.csv', result, 'utf8');
 }
