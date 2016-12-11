@@ -26,28 +26,33 @@ function main() {
         setPIN();
         displayUserMenu();
         setUserChoice();
-        if (userChoice === VIEW) {
+        if (userChoice == VIEW) {
             displayBalance();
-        } else if (userChoice === WITHDRAWAL) {
+        } else if (userChoice == WITHDRAWAL) {
             setWithdraw();
-        } else if (userChoice === DEPOSIT) {
+        } else if (userChoice == DEPOSIT) {
             setDeposit();
-        } else {
+        } else if (userChoice == TRANSFER) {
             setTransfer();
+        } else {
+            console.log("wtf");
         }
+        setContinueResponse();
     }
 }
 
 main();
 
 function setContinueResponse() {
-    if (typeof continueResponse !== 'undefined') {
+    if (continueResponse) {
         continueResponse = -1;
         while (continueResponse !== 0 && continueResponse !== 1) {
-            continueResponse = Number(PROMPT.question('\nDo you want to continue? [0=No, 1=Yes]'));
+            continueResponse = Number(PROMPT.question(`\nDo you want to continue? [0=no, 1=yes]: `));
+            console.log("continue response: " + continueResponse + ".");
         }
     } else {
-        continueResponse = 1
+        continueResponse = 1;
+        console.log("continue response: " + continueResponse + ".");
     }
 }
 
@@ -109,6 +114,22 @@ function displayUserMenu() {
 function setUserChoice() {
     while (typeof userChoice === 'undefined' || !/[0-4]{1}/.test(userChoice)){
         userChoice = PROMPT.question('\nPlease enter the number of your choice: ');
+        console.log(userChoice);
+        return userChoice;
+    }
+}
+
+function displayBalance() {
+    console.log("display balance");
+    if (currentUser[NUMBER_OF_ACCOUNTS] = ONE_ACCOUNT) {
+        console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account');
+    } else {
+        whichAccount = PROMPT.question('Would you like to view the balance of your checking 0) or savings 1) account');
+        if (whichAccount === CHECKING) {
+            console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account.');
+        } else {
+            console.log('You have $' + currentUser[BALANCE_OF_SAVINGS] + ' in your savings account.');
+        }
     }
 }
 
@@ -134,28 +155,15 @@ function setDeposit() {
         temp = PROMPT.question('Deposit amount: ');
         currentUser[BALANCE_OF_CHECKING] = Number(currentUser[BALANCE_OF_CHECKING] + temp);
     } else {
-        whichAccount = PROMPT.question('Would you like to withdraw from checkings 0) or savings 1)');
+        whichAccount = PROMPT.question('Would you like to deposit to checkings 0) or savings 1)');
         if (whichAccount === CHECKING) {
             console.log('Please insert money into machine');
-            temp = PROMPT.question('Deposit amount to checking: ');
+            temp = PROMPT.question('Deposit amount into checking: ');
             currentUser[BALANCE_OF_CHECKING] = Number(currentUser[BALANCE_OF_CHECKING] + temp);
         } else {
             console.log('Please insert money into machine');
-            temp = PROMPT.question('Withdraw amount savings: ');
+            temp = PROMPT.question('Deposit amount into savings: ');
             currentUser[BALANCE_OF_SAVINGS] = Number(currentUser[BALANCE_OF_SAVINGS] + temp);
-        }
-    }
-}
-
-function displayBalance() {
-    if (currentUser[NUMBER_OF_ACCOUNTS] = ONE_ACCOUNT) {
-        console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account');
-    } else {
-        whichAccount = PROMPT.question('Would you like to view the balance of your checking 0) or savings 1) account');
-        if (whichAccount === CHECKING) {
-            console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account.');
-        } else {
-            console.log('You have $' + currentUser[BALANCE_OF_SAVINGS] + ' in your savings account.');
         }
     }
 }
