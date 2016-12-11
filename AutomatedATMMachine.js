@@ -144,8 +144,19 @@ function displayBalance() {
     if (currentUser[NUMBER_OF_ACCOUNTS] == ONE_ACCOUNT) {
         console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account');
     } else {
-        whichAccount = PROMPT.question('Would you like to view the balance of your checking 0) or savings 1) account');
-        if (whichAccount === CHECKING) {
+        if (typeof whichAccount !== 'undefined') {
+            whichAccount = -1;
+            while(whichAccount == -1 || whichAccount != CHECKING && whichAccount != SAVINGS || isNaN(whichAccount)) {
+                whichAccount = PROMPT.question('Would you like to view the balance of your checking 0) or savings 1)' +
+                    ' account: ');
+            }
+        } else {
+            while(isNaN(whichAccount) || whichAccount != CHECKING && whichAccount != SAVINGS) {
+                whichAccount = Number(PROMPT.question('Would you like to view the balance of your checking 0) or' +
+                    ' savings 1) account: '));
+            }
+        }
+        if (whichAccount == CHECKING) {
             console.log('You have $' + currentUser[BALANCE_OF_CHECKING] + ' in your checking account.');
         } else {
             console.log('You have $' + currentUser[BALANCE_OF_SAVINGS] + ' in your savings account.');
