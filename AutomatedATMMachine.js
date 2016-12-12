@@ -196,7 +196,7 @@ function setWithdraw() {
                     temp = PROMPT.question('Withdraw amount from checking: ');
                 }
             } else {
-                while (temp < MIN_WITHDRAWAL || temp > currentUser[BALANCE_OF_CHECKING] || isNaN(temp)){
+                while (temp < MIN_WITHDRAWAL || temp < currentUser[BALANCE_OF_CHECKING] || isNaN(temp)){
                     temp = PROMPT.question('Withdraw amount from checking: ');
                 }
             }
