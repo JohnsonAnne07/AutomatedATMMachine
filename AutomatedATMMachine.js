@@ -196,8 +196,9 @@ function setWithdraw() {
                     temp = PROMPT.question('Withdraw amount from checking: ');
                 }
             } else {
-                while (temp < MIN_WITHDRAWAL || temp < currentUser[BALANCE_OF_CHECKING] || isNaN(temp)){
-                    temp = PROMPT.question('Withdraw amount from checking: ');
+                console.log('cows');
+                while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp)){
+                    temp = Number(PROMPT.question('Withdraw amount from checking: '));
                 }
             }
             currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp;
