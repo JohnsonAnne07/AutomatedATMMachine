@@ -12,9 +12,9 @@ const IO = require(`fs`);
 let continueResponse = undefined;
 let cardNumber, pin, userChoice, temp, whichAccount;
 let accounts = []; //card number, pin, last, first, number of accounts, balance of checking, balance of savings
-let currentUser = []; //the SD array that is created when you enter the card number
+let currentUser = [];
 
-const CARD_NUMBER = 0, PIN = 1, LAST_NAME = 2, FIRST_NAME = 3, NUMBER_OF_ACCOUNTS = 4, BALANCE_OF_CHECKING = 5, BALANCE_OF_SAVINGS = 6;
+const CARD_NUMBER = 0, PIN = 1, NUMBER_OF_ACCOUNTS = 4, BALANCE_OF_CHECKING = 5, BALANCE_OF_SAVINGS = 6;
 const VIEW = 1, WITHDRAWAL = 2, DEPOSIT = 3, TRANSFER = 4, CHECKING = 0, SAVINGS = 1, ONE_ACCOUNT = 1;
 
 function main() {
@@ -41,7 +41,7 @@ function main() {
         }
         userChoice = -1;
     }
-    //writeUserData();
+    writeUserData();
 }
 
 main();
@@ -176,7 +176,7 @@ function setWithdraw() {
                 temp = PROMPT.question('Withdraw amount(Limit of ' + currentUser[BALANCE_OF_CHECKING] + '): ');
             }
         }
-        Number(currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp);
+        currentUser[BALANCE_OF_CHECKING] = Number(Number(currentUser[BALANCE_OF_CHECKING]) - Number(temp));
     } else {
         if (typeof whichAccount !== 'undefined') {
             whichAccount = -1;
@@ -201,7 +201,7 @@ function setWithdraw() {
                     temp = PROMPT.question('Withdraw amount from checking(Limit of' + currentUser[BALANCE_OF_CHECKING] + '): ');
                 }
             }
-            Number(currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp);
+            currentUser[BALANCE_OF_CHECKING] = Number(Number(currentUser[BALANCE_OF_CHECKING]) - Number(temp));
         } else {
             if (typeof temp !== 'undefined') {
                 temp = -1;
@@ -213,7 +213,7 @@ function setWithdraw() {
                     temp = PROMPT.question('Withdraw amount from checking(Limit of' + currentUser[BALANCE_OF_SAVINGS] + '): ');
                 }
             }
-            Number([BALANCE_OF_SAVINGS] = currentUser[BALANCE_OF_SAVINGS] - temp);
+            currentUser[BALANCE_OF_SAVINGS] = Number(Number(currentUser[BALANCE_OF_SAVINGS]) - Number(temp));
         }
     }
 }
@@ -232,7 +232,7 @@ function setDeposit() {
                 temp = PROMPT.question('Deposit amount(Limit of ' + MAX_DEPOSIT_CHECKING + '): ');
             }
         }
-        Number(currentUser[BALANCE_OF_CHECKING] = (currentUser[BALANCE_OF_CHECKING] + temp));
+        currentUser[BALANCE_OF_CHECKING] = Number(Number(currentUser[BALANCE_OF_CHECKING]) + Number(temp));
     } else {
         if (typeof whichAccount !== 'undefined') {
             whichAccount = -1;
@@ -258,7 +258,7 @@ function setDeposit() {
                     temp = Number(PROMPT.question('Deposit amount into checking (Limit of ' + MAX_DEPOSIT_CHECKING + '): '));
                 }
             }
-            Number(currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] + temp);
+            currentUser[BALANCE_OF_CHECKING] = Number(Number(currentUser[BALANCE_OF_CHECKING]) + Number(temp));
         } else {
             console.log('Please insert money into machine');
             if (typeof temp !== 'undefined') {
@@ -271,7 +271,7 @@ function setDeposit() {
                     temp = Number(PROMPT.question('Deposit amount into savings(Limit of ' + MAX_DEPOSIT_SAVINGS + '): '));
                 }
             }
-            Number(currentUser[BALANCE_OF_SAVINGS] = currentUser[BALANCE_OF_SAVINGS] + temp);
+            currentUser[BALANCE_OF_SAVINGS] = Number(Number(currentUser[BALANCE_OF_SAVINGS]) + Number(temp));
         }
     }
 }
@@ -309,8 +309,8 @@ function setTransfer() {
             temp = Number(PROMPT.question('Enter amount to transfer (Limit of ' + maxTransfer + '): '));
         }
     }
-    Number(currentUser[outputAccount] = currentUser[outputAccount] - temp);
-    Number(currentUser[inputAccount] = currentUser[inputAccount] + temp);
+    currentUser[inputAccount] = Number(Number(currentUser[inputAccount]) + Number(temp));
+    currentUser[outputAccount] = Number(Number(currentUser[outputAccount]) - Number(temp));
 }
 
 function writeUserData() {
