@@ -37,8 +37,8 @@
       <file leaf-file-name="AutomatedATMMachine.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AutomatedATMMachine.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="288" column="35" lean-forward="false" selection-start-line="288" selection-start-column="35" selection-end-line="288" selection-end-column="35" />
+            <state relative-caret-position="385">
+              <caret line="178" column="0" lean-forward="false" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -589,12 +589,12 @@
       <workItem from="1481055490903" duration="72000" />
       <workItem from="1481147118124" duration="574000" />
       <workItem from="1481484723859" duration="14195000" />
-      <workItem from="1481577184747" duration="7694000" />
+      <workItem from="1481577184747" duration="9621000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133465000" />
+    <option name="totallyTimeSpent" value="135392000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -886,8 +886,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AutomatedATMMachine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="288" column="35" lean-forward="false" selection-start-line="288" selection-start-column="35" selection-end-line="288" selection-end-column="35" />
+        <state relative-caret-position="385">
+          <caret line="178" column="0" lean-forward="false" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
           <folding />
         </state>
       </provider>

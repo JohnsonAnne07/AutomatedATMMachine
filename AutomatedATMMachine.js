@@ -277,25 +277,38 @@ function setDeposit() {
 }
 
 function setTransfer() {
-    let outputAccount, inputAccount;
+    let outputAccount, inputAccount, maxTransfer;
+    const MAKES_THE_LOOP_WORK = 12, MIN_TRANSFER_SUM = 1;
     if (typeof outputAccount !== 'undefined') {
         outputAccount = -1;
         while (outputAccount == -1 || outputAccount != CHECKING && outputAccount != SAVINGS || isNaN(outputAccount)) {
             outputAccount = Number(PROMPT.question('Would you like to transfer money FROM your checking 0) or savings 1)' +
-                ' account'));
+                ' account: '));
         }
     } else {
+        outputAccount = MAKES_THE_LOOP_WORK;
         while (isNaN(outputAccount) || outputAccount != CHECKING && outputAccount != SAVINGS) {
             outputAccount = Number(PROMPT.question('Would you like to transfer money FROM your checking 0) or savings 1)' +
-                ' account'));
+                ' account: '));
         }
     }
     if (outputAccount === CHECKING) {
         inputAccount = SAVINGS;
+        maxTransfer = Number(currentUser[BALANCE_OF_CHECKING]);
     } else {
         inputAccount = CHECKING;
+        maxTransfer = Number(currentUser[BALANCE_OF_SAVINGS]);
     }
-    temp = Number(PROMPT.question('Enter amount to transfer: '));
+    if (typeof temp !== 'undefined') {
+        temp = -1;
+        while (temp < MIN_TRANSFER_SUM || temp > maxTransfer || isNaN(temp) || temp == -1) {
+            temp = Number(PROMPT.question('Enter amount to transfer (Limit of ' + maxTransfer + '): '));
+        }
+    } else {
+        while (temp < MIN_TRANSFER_SUM || temp > maxTransfer || isNaN(temp)) {
+            temp = Number(PROMPT.question('Enter amount to transfer (Limit of ' + maxTransfer + '): '));
+        }
+    }
     Number(currentUser[outputAccount] = currentUser[outputAccount] - temp);
     Number(currentUser[inputAccount] = currentUser[inputAccount] + temp);
 }
