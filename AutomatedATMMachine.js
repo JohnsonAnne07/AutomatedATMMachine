@@ -113,25 +113,25 @@ function displayUserMenu() {
 
 function setUserChoice() {
     const LOWEST = 1, HIGHEST = 4;
-    if(currentUser[NUMBER_OF_ACCOUNTS] == ONE_ACCOUNT){
-        if (typeof userChoice !== 'undefined'){
+    if (currentUser[NUMBER_OF_ACCOUNTS] == ONE_ACCOUNT) {
+        if (typeof userChoice !== 'undefined') {
             userChoice = -1;
-            while (userChoice < LOWEST || userChoice > HIGHEST || userChoice == TRANSFER || isNaN(userChoice) || userChoice === -1){
+            while (userChoice < LOWEST || userChoice > HIGHEST || userChoice == TRANSFER || isNaN(userChoice) || userChoice === -1) {
                 userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
             }
         } else {
-            while (userChoice < LOWEST || userChoice > HIGHEST || userChoice == TRANSFER || isNaN(userChoice)){
+            while (userChoice < LOWEST || userChoice > HIGHEST || userChoice == TRANSFER || isNaN(userChoice)) {
                 userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
             }
         }
     } else {
-        if (typeof userChoice !== 'undefined'){
+        if (typeof userChoice !== 'undefined') {
             userChoice = -1;
-            while (userChoice < LOWEST || userChoice > HIGHEST || isNaN(userChoice) || userChoice === -1){
+            while (userChoice < LOWEST || userChoice > HIGHEST || isNaN(userChoice) || userChoice === -1) {
                 userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
             }
         } else {
-            while (userChoice < LOWEST || userChoice > HIGHEST ||isNaN(userChoice)){
+            while (userChoice < LOWEST || userChoice > HIGHEST || isNaN(userChoice)) {
                 userChoice = Number(PROMPT.question('\nPlease enter the number of your choice: '));
             }
         }
@@ -145,12 +145,12 @@ function displayBalance() {
     } else {
         if (typeof whichAccount !== 'undefined') {
             whichAccount = -1;
-            while(whichAccount == -1 || whichAccount != CHECKING && whichAccount != SAVINGS || isNaN(whichAccount)) {
+            while (whichAccount == -1 || whichAccount != CHECKING && whichAccount != SAVINGS || isNaN(whichAccount)) {
                 whichAccount = PROMPT.question('Would you like to view the balance of your checking 0) or savings 1)' +
                     ' account: ');
             }
         } else {
-            while(isNaN(whichAccount) || whichAccount != CHECKING && whichAccount != SAVINGS) {
+            while (isNaN(whichAccount) || whichAccount != CHECKING && whichAccount != SAVINGS) {
                 whichAccount = Number(PROMPT.question('Would you like to view the balance of your checking 0) or' +
                     ' savings 1) account: '));
             }
@@ -166,13 +166,13 @@ function displayBalance() {
 function setWithdraw() {
     const MIN_WITHDRAWAL = 0;
     if (Number(currentUser[NUMBER_OF_ACCOUNTS]) == ONE_ACCOUNT) {
-        if (typeof temp !== 'undefined'){
+        if (typeof temp !== 'undefined') {
             temp = -1;
-            while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp) || temp == -1){
+            while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp) || temp == -1) {
                 temp = PROMPT.question('Withdraw amount: ');
             }
         } else {
-            while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp)){
+            while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp)) {
                 temp = PROMPT.question('Withdraw amount: ');
             }
         }
@@ -180,38 +180,36 @@ function setWithdraw() {
     } else {
         if (typeof whichAccount !== 'undefined') {
             whichAccount = -1;
-            while(whichAccount == -1 || whichAccount != CHECKING && whichAccount != SAVINGS || isNaN(whichAccount)) {
+            while (whichAccount == -1 || whichAccount != CHECKING && whichAccount != SAVINGS || isNaN(whichAccount)) {
                 whichAccount = Number(PROMPT.question('Would you like to withdraw from checkings 0) or savings 1)' +
                     ' account: '));
             }
         } else {
-            while(isNaN(whichAccount) || whichAccount != CHECKING && whichAccount != SAVINGS) {
+            while (isNaN(whichAccount) || whichAccount != CHECKING && whichAccount != SAVINGS) {
                 whichAccount = Number(PROMPT.question('Would you like to withdraw from checkings 0) or savings 1)' +
                     ' account: '));
             }
         }
         if (whichAccount === CHECKING) {
-            console.log('checking');
-            if (typeof temp !== 'undefined'){
+            if (typeof temp !== 'undefined') {
                 temp = -1;
-                while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp) || temp == -1){
+                while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp) || temp == -1) {
                     temp = PROMPT.question('Withdraw amount from checking: ');
                 }
             } else {
-                console.log('cows');
-                while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp)){
+                while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp)) {
                     temp = Number(PROMPT.question('Withdraw amount from checking: '));
                 }
             }
             Number(currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp);
         } else {
-            if (typeof temp !== 'undefined'){
+            if (typeof temp !== 'undefined') {
                 temp = -1;
-                while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_SAVINGS]) || isNaN(temp) || temp == -1){
+                while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_SAVINGS]) || isNaN(temp) || temp == -1) {
                     temp = Number(PROMPT.question('Withdraw amount savings: '));
                 }
             } else {
-                while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_SAVINGS]) || isNaN(temp)){
+                while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_SAVINGS]) || isNaN(temp)) {
                     temp = Number(PROMPT.question('Withdraw amount savings: '));
                 }
             }
@@ -221,19 +219,58 @@ function setWithdraw() {
 }
 
 function setDeposit() {
+    const MAX_DEPOSIT_CHECKING = Number(currentUser[BALANCE_OF_CHECKING] / 2), MAX_DEPOSIT_SAVINGS = Number(currentUser[BALANCE_OF_SAVINGS] / 2), MIN_DEPOSIT = 1;
     if (Number(currentUser[NUMBER_OF_ACCOUNTS]) === ONE_ACCOUNT) {
         console.log('Please insert money into machine');
-        temp = PROMPT.question('Deposit amount: ');
+        if (typeof temp !== 'undefined') {
+            temp = -1;
+            while (temp < MIN_DEPOSIT || temp > MAX_DEPOSIT_CHECKING || isNaN(temp) || temp == -1) {
+                temp = PROMPT.question('Deposit amount(Limit of ${MAX_DEPOSIT_CHECKING}: ');
+            }
+        } else {
+            while (temp < MIN_DEPOSIT || temp > MAX_DEPOSIT_CHECKING || isNaN(temp)) {
+                temp = PROMPT.question('Deposit amount(Limit of ${MAX_DEPOSIT_CHECKING}: ');
+            }
+        }
         Number(currentUser[BALANCE_OF_CHECKING] = (currentUser[BALANCE_OF_CHECKING] + temp));
     } else {
-        whichAccount = Number(PROMPT.question('Would you like to deposit to checkings 0) or savings 1)'));
+        if (typeof whichAccount !== 'undefined') {
+            whichAccount = -1;
+            while (whichAccount == -1 || whichAccount != CHECKING && whichAccount != SAVINGS || isNaN(whichAccount)) {
+                whichAccount = Number(PROMPT.question('Would you like to deposit from checkings 0) or savings 1)' +
+                    ' account: '));
+            }
+        } else {
+            while (isNaN(whichAccount) || whichAccount != CHECKING && whichAccount != SAVINGS) {
+                whichAccount = Number(PROMPT.question('Would you like to deposit from checkings 0) or savings 1)' +
+                    ' account: '));
+            }
+        }
         if (whichAccount === CHECKING) {
             console.log('Please insert money into machine');
-            temp = Number(PROMPT.question('Deposit amount into checking: '));
-            Number(currentUser[BALANCE_OF_CHECKING] = Number(currentUser[BALANCE_OF_CHECKING] + temp));
+            if (typeof temp !== 'undefined') {
+                temp = -1;
+                while (temp < MIN_DEPOSIT || temp > MAX_DEPOSIT_CHECKING || isNaN(temp) || temp == -1) {
+                    temp = Number(PROMPT.question('Deposit amount into checking (Limit of ' + MAX_DEPOSIT_CHECKING + '): '));
+                }
+            } else {
+                while (temp < MIN_DEPOSIT || temp > MAX_DEPOSIT_CHECKING || isNaN(temp)) {
+                    temp = Number(PROMPT.question('Deposit amount into checking (Limit of ' + MAX_DEPOSIT_CHECKING + '): '));
+                }
+            }
+            Number(currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] + temp);
         } else {
             console.log('Please insert money into machine');
-            temp = Number(PROMPT.question('Deposit amount into savings: '));
+            if (typeof temp !== 'undefined') {
+                temp = -1;
+                while (temp < MIN_DEPOSIT || temp > MAX_DEPOSIT_CHECKING || isNaN(temp) || temp == -1) {
+                    temp = Number(PROMPT.question('Deposit amount into savings(Limit of ' + MAX_DEPOSIT_SAVINGS + '): '));
+                }
+            } else {
+                while (temp < MIN_DEPOSIT || temp > MAX_DEPOSIT_CHECKING || isNaN(temp)) {
+                    temp = Number(PROMPT.question('Deposit amount into savings(Limit of ' + MAX_DEPOSIT_SAVINGS + '): '));
+                }
+            }
             Number(currentUser[BALANCE_OF_SAVINGS] = currentUser[BALANCE_OF_SAVINGS] + temp);
         }
     }
@@ -241,8 +278,18 @@ function setDeposit() {
 
 function setTransfer() {
     let outputAccount, inputAccount;
-    outputAccount = Number(PROMPT.question('Would you like to transfer money FROM your checking 0) or savings 1)' +
-        ' account'));
+    if (typeof outputAccount !== 'undefined') {
+        outputAccount = -1;
+        while (outputAccount == -1 || outputAccount != CHECKING && outputAccount != SAVINGS || isNaN(outputAccount)) {
+            outputAccount = Number(PROMPT.question('Would you like to transfer money FROM your checking 0) or savings 1)' +
+                ' account'));
+        }
+    } else {
+        while (isNaN(outputAccount) || outputAccount != CHECKING && outputAccount != SAVINGS) {
+            outputAccount = Number(PROMPT.question('Would you like to transfer money FROM your checking 0) or savings 1)' +
+                ' account'));
+        }
+    }
     if (outputAccount === CHECKING) {
         inputAccount = SAVINGS;
     } else {
@@ -256,7 +303,7 @@ function setTransfer() {
 function writeUserData() {
     let userData = "";
     for (let i = 0; i < currentUser.length; i++) {
-        if (i < currentUser.length -1) {
+        if (i < currentUser.length - 1) {
             userData += currentUser[i] + ",";
         } else {
             userData += currentUser[i];
