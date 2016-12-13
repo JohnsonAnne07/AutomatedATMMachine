@@ -169,11 +169,11 @@ function setWithdraw() {
         if (typeof temp !== 'undefined') {
             temp = -1;
             while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp) || temp == -1) {
-                temp = PROMPT.question('Withdraw amount: ');
+                temp = PROMPT.question('Withdraw amount(Limit of ' + currentUser[BALANCE_OF_CHECKING] + '): ');
             }
         } else {
             while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp)) {
-                temp = PROMPT.question('Withdraw amount: ');
+                temp = PROMPT.question('Withdraw amount(Limit of ' + currentUser[BALANCE_OF_CHECKING] + '): ');
             }
         }
         Number(currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp);
@@ -194,11 +194,11 @@ function setWithdraw() {
             if (typeof temp !== 'undefined') {
                 temp = -1;
                 while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp) || temp == -1) {
-                    temp = PROMPT.question('Withdraw amount from checking: ');
+                    temp = PROMPT.question('Withdraw amount from checking(Limit of' + currentUser[BALANCE_OF_CHECKING] + '): ');
                 }
             } else {
                 while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_CHECKING]) || isNaN(temp)) {
-                    temp = Number(PROMPT.question('Withdraw amount from checking: '));
+                    temp = PROMPT.question('Withdraw amount from checking(Limit of' + currentUser[BALANCE_OF_CHECKING] + '): ');
                 }
             }
             Number(currentUser[BALANCE_OF_CHECKING] = currentUser[BALANCE_OF_CHECKING] - temp);
@@ -206,11 +206,11 @@ function setWithdraw() {
             if (typeof temp !== 'undefined') {
                 temp = -1;
                 while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_SAVINGS]) || isNaN(temp) || temp == -1) {
-                    temp = Number(PROMPT.question('Withdraw amount savings: '));
+                    temp = PROMPT.question('Withdraw amount from checking(Limit of' + currentUser[BALANCE_OF_SAVINGS] + '): ');
                 }
             } else {
                 while (temp < MIN_WITHDRAWAL || temp > Number(currentUser[BALANCE_OF_SAVINGS]) || isNaN(temp)) {
-                    temp = Number(PROMPT.question('Withdraw amount savings: '));
+                    temp = PROMPT.question('Withdraw amount from checking(Limit of' + currentUser[BALANCE_OF_SAVINGS] + '): ');
                 }
             }
             Number([BALANCE_OF_SAVINGS] = currentUser[BALANCE_OF_SAVINGS] - temp);
@@ -225,11 +225,11 @@ function setDeposit() {
         if (typeof temp !== 'undefined') {
             temp = -1;
             while (temp < MIN_DEPOSIT || temp > MAX_DEPOSIT_CHECKING || isNaN(temp) || temp == -1) {
-                temp = PROMPT.question('Deposit amount(Limit of ${MAX_DEPOSIT_CHECKING}: ');
+                temp = PROMPT.question('Deposit amount(Limit of ' + MAX_DEPOSIT_CHECKING + '): ');
             }
         } else {
             while (temp < MIN_DEPOSIT || temp > MAX_DEPOSIT_CHECKING || isNaN(temp)) {
-                temp = PROMPT.question('Deposit amount(Limit of ${MAX_DEPOSIT_CHECKING}: ');
+                temp = PROMPT.question('Deposit amount(Limit of ' + MAX_DEPOSIT_CHECKING + '): ');
             }
         }
         Number(currentUser[BALANCE_OF_CHECKING] = (currentUser[BALANCE_OF_CHECKING] + temp));
